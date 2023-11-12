@@ -1,13 +1,187 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".features.transactions.transactiondetails.TransactionDetailsFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
+    <data>
+
+        <variable
+            name="viewModel"
+            type="nz.co.test.transactions.features.transactions.transactiondetails.TransactionDetailsViewModel" />
+
+        <variable
+            name="transaction"
+            type="nz.co.test.transactions.TransactionDto" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Hello" />
+        android:background="?android:colorBackground"
+        android:clickable="true"
+        android:paddingHorizontal="@dimen/default_padding"
+        android:paddingTop="@dimen/default_margin">
 
-</FrameLayout>
+        <!-- Summary Section -->
+        <TextView
+            android:id="@+id/textSummary"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/half_margin"
+            android:text="@{transaction.summary}"
+            app:layout_constraintEnd_toStartOf="@+id/textAmount"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{transaction.getFormattedAmount()}"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/dividerTop"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/divider_height"
+            android:layout_marginTop="@dimen/default_margin"
+            android:background="@android:color/darker_gray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textSummary" />
+
+        <LinearLayout
+            android:id="@+id/detailsSection"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/half_margin"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dividerTop">
+
+            <!-- Amount -->
+            <TextView
+                android:id="@+id/amountText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/amount_colon"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/amountValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{transaction.getFormattedAmount()}"
+                tools:text="Your Amount Value Here" />
+
+            <!-- GST -->
+            <TextView
+                android:id="@+id/gstText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_margin"
+                android:text="@string/gst_colon"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/gstValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{transaction.getFormattedGst()}"
+                tools:text="Your GST Value Here" />
+
+            <!-- Transaction Date -->
+            <TextView
+                android:id="@+id/transactionDateText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_margin"
+                android:text="@string/transaction_date_colon"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/transactionDateValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{transaction.getLongDate()}"
+                tools:text="Your Transaction Date Value Here" />
+
+            <!-- ID -->
+            <TextView
+                android:id="@+id/idText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_margin"
+                android:text="@string/id_colon"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/idValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{transaction.id.toString()}"
+                tools:text="Your ID Value Here" />
+
+            <!-- Divider Line -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginVertical="@dimen/default_margin"
+                android:background="@android:color/darker_gray" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardWidget"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/half_margin"
+                android:onClick="@{() -> viewModel.onCardViewHelpClicked()}"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp"
+                app:cardUseCompatPadding="true">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:padding="@dimen/default_padding">
+
+                    <ImageView
+                        android:id="@+id/cardWidgetIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@android:drawable/stat_notify_chat"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="?android:colorPrimary" />
+
+                    <TextView
+                        android:id="@+id/cardWidgetText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/half_margin"
+                        android:text="@string/need_help"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/cardWidgetIconNext"
+                        app:layout_constraintStart_toEndOf="@id/cardWidgetIcon"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/cardWidgetIconNext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:rotation="90"
+                        android:src="@android:drawable/arrow_up_float"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="?android:colorPrimary" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -6,14 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.launch
+import nz.co.test.transactions.R
 import nz.co.test.transactions.TransactionDto
 import nz.co.test.transactions.databinding.FragmentTransactionsListBinding
 import nz.co.test.transactions.error.ErrorType
+import nz.co.test.transactions.features.transactions.transactiondetails.TransactionDetailsFragment
 
 
 class TransactionsListFragment : Fragment() {
@@ -89,7 +92,21 @@ class TransactionsListFragment : Fragment() {
 
     private fun showTransactionsList(transactionDtos: List<TransactionDto>) {
         transactionsList.layoutManager = LinearLayoutManager(context)
-        transactionsList.adapter = TransactionsListAdapter(transactionDtos)
+        transactionsList.adapter = TransactionsListAdapter(
+            transactionDtos,
+            onItemClickListener = {
+                parentFragmentManager.commit {
+                    val transactionDetailsFragment = TransactionDetailsFragment.newInstance(
+                        it
+                    )
+                    add(
+                        R.id.transactions_container_view,
+                        transactionDetailsFragment,
+                    )
+                    addToBackStack(transactionDetailsFragment.javaClass.name)
+                }
+            },
+        )
     }
 
 

@@ -6,12 +6,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.constraintlayout.widget.Group
 import androidx.recyclerview.widget.RecyclerView
-import nz.co.test.transactions.R
 import nz.co.test.transactions.TransactionDto
+import nz.co.test.transactions.databinding.ItemTransactionBinding
 import java.text.NumberFormat
-import java.text.ParseException
-import java.text.SimpleDateFormat
-import java.util.Date
 import java.util.Locale
 
 data class GroupedTransactionItem(
@@ -21,46 +18,55 @@ data class GroupedTransactionItem(
     val transaction: TransactionDto?
 )
 
-class TransactionsListAdapter(transactions: List<TransactionDto>) :
+class TransactionsListAdapter(
+    transactions: List<TransactionDto>,
+    private val onItemClickListener: (TransactionDto) -> Unit,
+) :
     RecyclerView.Adapter<TransactionsListAdapter.ViewHolder>() {
 
     private val groupedItems: List<GroupedTransactionItem> = generateGroupedItems(transactions)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(
-            LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_transaction, parent, false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
+        ViewHolder(
+            ItemTransactionBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false,
+            )
         )
-    }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = groupedItems[position]
 
         val isHeader = item.isHeader
         holder.dividers.visibility = if (isHeader) View.VISIBLE else View.INVISIBLE
+        val transaction = item.transaction
         holder.textShortDate.apply {
-            text =
-                if (isHeader) item.headerText else getShortDate(item.transaction?.transactionDate)
+            text = if (isHeader) item.headerText else transaction?.getShortDate()
             visibility = if (isHeader) View.VISIBLE else View.GONE
         }
         holder.textAmount.text = if (isHeader) formatAmount(item.finalAmount) else {
-            val amount = if (item.transaction?.credit != 0.0) {
-                item.transaction?.credit
-            } else -1 * (item.transaction.debit ?: 0.0)
-            formatAmount(amount)
+            transaction?.getFormattedAmount() ?: ""
         }
-        holder.textSummary.text = if (isHeader) "" else item.transaction?.summary
+        holder.textSummary.text = if (isHeader) "" else transaction?.summary
+
+        holder.itemView.setOnClickListener {
+            if (!isHeader)
+                transaction?.let { dto -> onItemClickListener.invoke(dto) }
+        }
     }
 
     override fun getItemCount(): Int = groupedItems.size
 
     override fun getItemViewType(position: Int): Int = position
+
     override fun getItemId(position: Int): Long = position.toLong()
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val textShortDate: TextView = itemView.findViewById(R.id.textTransactionDate)
-        val textSummary: TextView = itemView.findViewById(R.id.textSummary)
-        val textAmount: TextView = itemView.findViewById(R.id.textAmount)
-        val dividers: Group = itemView.findViewById(R.id.dividers)
+
+    class ViewHolder(binding: ItemTransactionBinding) : RecyclerView.ViewHolder(binding.root) {
+        val textShortDate: TextView = binding.textTransactionDate
+        val textSummary: TextView = binding.textSummary
+        val textAmount: TextView = binding.textAmount
+        val dividers: Group = binding.dividers
     }
 
     private fun generateGroupedItems(transactions: List<TransactionDto>): List<GroupedTransactionItem> {
@@ -68,7 +74,7 @@ class TransactionsListAdapter(transactions: List<TransactionDto>) :
         val dailyAmountMap = mutableMapOf<String, Double>()
 
         for (transaction in transactions) {
-            val transactionDate = getShortDate(transaction.transactionDate)
+            val transactionDate = transaction.getShortDate()
 
             // Update daily amount
             val currentAmount = dailyAmountMap.getOrDefault(transactionDate, 0.0)
@@ -102,20 +108,6 @@ class TransactionsListAdapter(transactions: List<TransactionDto>) :
         return groupedItems
     }
 
-    private fun getShortDate(fullDate: String?): String {
-        if (fullDate.isNullOrEmpty()) return ""
-
-        val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US)
-        val outputFormat = SimpleDateFormat("EEE dd MMM yyyy", Locale.US)
-
-        return try {
-            val date = inputFormat.parse(fullDate)
-            outputFormat.format(date ?: Date()).uppercase(Locale.ROOT)
-        } catch (e: ParseException) {
-            ""
-        }
-    }
-
     private fun formatAmount(amount: Double?): String {
         if (amount == null) return ""
 
@@ -123,4 +115,3 @@ class TransactionsListAdapter(transactions: List<TransactionDto>) :
         return numberFormat.format(amount)
     }
 }
-

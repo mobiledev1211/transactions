@@ -14,8 +14,6 @@ class HomeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private val viewPager: ViewPager2 by lazy { binding.viewPager }
-
-    //    private val contentContainer: FrameLayout by lazy { binding.contentContainer }
     private val bottomNavigationView: BottomNavigationView by lazy { binding.bottomNavigationView }
 
     private val viewModel: HomeViewModel by lazy {

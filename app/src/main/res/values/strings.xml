@@ -2,4 +2,9 @@
     <string name="app_name">Transactions</string>
     <string name="menu_title_transactions_list">Transactions list</string>
     <string name="menu_title_credits">Info</string>
+    <string name="need_help">Need help?</string>
+    <string name="id_colon">ID:</string>
+    <string name="transaction_date_colon">Transaction date:</string>
+    <string name="amount_colon">Amount:</string>
+    <string name="gst_colon">GST:</string>
 </resources>
