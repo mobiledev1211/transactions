@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_transactions_list"
+        android:icon="@android:drawable/ic_menu_zoom"
+        android:title="@string/menu_title_transactions_list" />
+    <item
+        android:id="@+id/menu_transaction_detail"
+        android:icon="@android:drawable/ic_menu_info_details"
+        android:title="@string/menu_title_credits" />
+</menu>

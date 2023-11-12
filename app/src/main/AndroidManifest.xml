@@ -20,7 +20,7 @@
         tools:replace="android:appComponentFactory">
 
         <activity
-            android:name=".activities.MainActivity"
+            android:name=".features.home.HomeActivity"
             tools:ignore="Instantiatable"
             android:exported="true">
             <intent-filter>

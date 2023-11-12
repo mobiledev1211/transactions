@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Transactions</string>
+    <string name="menu_title_transactions_list">Transactions list</string>
+    <string name="menu_title_credits">Info</string>
 </resources>
