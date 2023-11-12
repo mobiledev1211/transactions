@@ -1,6 +1,6 @@
 package nz.co.test.transactions.services
 
-import nz.co.test.transactions.TransactionDto
+import nz.co.test.transactions.features.transactions.transactionslist.domain.TransactionDto
 import retrofit2.http.GET
 
 interface TransactionsService {

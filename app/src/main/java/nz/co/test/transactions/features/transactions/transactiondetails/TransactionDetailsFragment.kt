@@ -8,7 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import nz.co.test.transactions.R
-import nz.co.test.transactions.TransactionDto
+import nz.co.test.transactions.features.transactions.transactionslist.domain.TransactionDto
 import nz.co.test.transactions.databinding.FragmentTransactionDetailsBinding
 
 private const val ARG_TRANSACTION = "transaction"

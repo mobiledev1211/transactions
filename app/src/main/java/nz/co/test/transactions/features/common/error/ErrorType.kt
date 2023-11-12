@@ -1,4 +1,4 @@
-package nz.co.test.transactions.error
+package nz.co.test.transactions.features.common.error
 
 sealed class ErrorType {
     object NO_DATA : ErrorType()

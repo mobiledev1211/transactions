@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.fragment.app.FragmentContainerView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/transactions_container_view"
-    android:name="nz.co.test.transactions.features.transactions.transactionslist.TransactionsListFragment"
+    android:name="nz.co.test.transactions.features.transactions.transactionslist.presentation.TransactionsListFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent" />

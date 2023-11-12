@@ -1,4 +1,4 @@
-package nz.co.test.transactions.features.transactions.transactionslist
+package nz.co.test.transactions.features.transactions.transactionslist.presentation
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.constraintlayout.widget.Group
 import androidx.recyclerview.widget.RecyclerView
-import nz.co.test.transactions.TransactionDto
+import nz.co.test.transactions.features.transactions.transactionslist.domain.TransactionDto
 import nz.co.test.transactions.databinding.ItemTransactionBinding
 import java.text.NumberFormat
 import java.util.Locale

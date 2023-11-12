@@ -8,7 +8,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import nz.co.test.transactions.databinding.ActivityMainBinding
 import nz.co.test.transactions.features.credits.CreditsFragment
-import nz.co.test.transactions.features.transactions.TransactionsFragment
+import nz.co.test.transactions.features.transactions.TransactionsContainerFragment
 
 class HomeActivity : AppCompatActivity() {
 
@@ -31,7 +31,7 @@ class HomeActivity : AppCompatActivity() {
         viewModel.init(
             activity = activity,
             listFragments = listOf(
-                TransactionsFragment.newInstance(),
+                TransactionsContainerFragment.newInstance(),
                 CreditsFragment.newInstance(
                     title = "By Keegan Liew\nhttps://www.linkedin.com/in/keeganliew/",
                     description = "This is a simple application that will fetch a list of transactions from an api endpoint and display them in a list.  When a user selects a transaction they will be shown a second screen that will display a more detailed view of the transaction data.\nhttps://github.com/MobileChapter/recruit-android"

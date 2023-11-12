@@ -8,12 +8,12 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import nz.co.test.transactions.R
 
-class TransactionsFragment : Fragment() {
+class TransactionsContainerFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_transactions, container, false)
+    ): View? = inflater.inflate(R.layout.fragment_transactions_container, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -31,6 +31,6 @@ class TransactionsFragment : Fragment() {
 
     companion object {
 
-        fun newInstance() = TransactionsFragment()
+        fun newInstance() = TransactionsContainerFragment()
     }
 }

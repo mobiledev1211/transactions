@@ -11,7 +11,7 @@
 
         <variable
             name="transaction"
-            type="nz.co.test.transactions.TransactionDto" />
+            type="nz.co.test.transactions.features.transactions.transactionslist.domain.TransactionDto" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -1,4 +1,4 @@
-package nz.co.test.transactions.features.transactions.transactionslist
+package nz.co.test.transactions.features.transactions.transactionslist.presentation
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
@@ -8,8 +8,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import nz.co.test.transactions.BuildConfig
-import nz.co.test.transactions.TransactionDto
-import nz.co.test.transactions.error.ErrorType
+import nz.co.test.transactions.features.transactions.transactionslist.domain.TransactionDto
+import nz.co.test.transactions.features.common.error.ErrorType
 import nz.co.test.transactions.services.TransactionsService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

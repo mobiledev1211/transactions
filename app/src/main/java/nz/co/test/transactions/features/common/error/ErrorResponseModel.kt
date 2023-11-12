@@ -1,4 +1,4 @@
-package nz.co.test.transactions.error
+package nz.co.test.transactions.features.common.error
 
 import androidx.annotation.Keep
 

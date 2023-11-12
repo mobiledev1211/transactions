@@ -1,4 +1,4 @@
-package nz.co.test.transactions.features.transactions.transactionslist
+package nz.co.test.transactions.features.transactions.transactionslist.presentation
 
 //import androidx.lifecycle.repeatOnLifecycle
 import android.os.Bundle
@@ -13,9 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.launch
 import nz.co.test.transactions.R
-import nz.co.test.transactions.TransactionDto
+import nz.co.test.transactions.features.transactions.transactionslist.domain.TransactionDto
 import nz.co.test.transactions.databinding.FragmentTransactionsListBinding
-import nz.co.test.transactions.error.ErrorType
+import nz.co.test.transactions.features.common.error.ErrorType
 import nz.co.test.transactions.features.transactions.transactiondetails.TransactionDetailsFragment
 
 

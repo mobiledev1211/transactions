@@ -1,6 +1,6 @@
-package nz.co.test.transactions.features.transactions.transactionslist
+package nz.co.test.transactions.features.transactions.transactionslist.data
 
-import nz.co.test.transactions.TransactionDto
+import nz.co.test.transactions.features.transactions.transactionslist.domain.TransactionDto
 import nz.co.test.transactions.services.TransactionsService
 import javax.inject.Inject
 

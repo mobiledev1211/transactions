@@ -7,7 +7,7 @@ import dagger.MapKey
 import dagger.Module
 import dagger.multibindings.IntoMap
 import nz.co.test.transactions.features.home.HomeViewModel
-import nz.co.test.transactions.features.transactions.transactionslist.TransactionsListViewModel
+import nz.co.test.transactions.features.transactions.transactionslist.presentation.TransactionsListViewModel
 import kotlin.reflect.KClass
 
 @Module
