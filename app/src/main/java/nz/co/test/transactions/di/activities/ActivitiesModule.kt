@@ -12,5 +12,5 @@ class ActivitiesModule {
     @Provides
     @IntoMap
     @ActivityClassKey(HomeActivity::class)
-    fun providesMainActivity(): Activity = HomeActivity()
+    fun providesHomeActivity(): Activity = HomeActivity()
 }

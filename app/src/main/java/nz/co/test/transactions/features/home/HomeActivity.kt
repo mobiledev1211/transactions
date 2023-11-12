@@ -8,7 +8,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import nz.co.test.transactions.databinding.ActivityMainBinding
 import nz.co.test.transactions.features.credits.CreditsFragment
-import nz.co.test.transactions.features.transactions.transactionslist.TransactionsListFragment
+import nz.co.test.transactions.features.transactions.TransactionsFragment
 
 class HomeActivity : AppCompatActivity() {
 
@@ -19,8 +19,7 @@ class HomeActivity : AppCompatActivity() {
     private val bottomNavigationView: BottomNavigationView by lazy { binding.bottomNavigationView }
 
     private val viewModel: HomeViewModel by lazy {
-        ViewModelProvider(this)
-            .get(HomeViewModel::class.java)
+        ViewModelProvider(this)[HomeViewModel::class.java]
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,7 +33,7 @@ class HomeActivity : AppCompatActivity() {
         viewModel.init(
             activity = activity,
             listFragments = listOf(
-                TransactionsListFragment.newInstance(),
+                TransactionsFragment.newInstance(),
                 CreditsFragment.newInstance(
                     title = "By Keegan Liew\nhttps://www.linkedin.com/in/keeganliew/",
                     description = "This is a simple application that will fetch a list of transactions from an api endpoint and display them in a list.  When a user selects a transaction they will be shown a second screen that will display a more detailed view of the transaction data.\nhttps://github.com/MobileChapter/recruit-android"
@@ -45,6 +44,7 @@ class HomeActivity : AppCompatActivity() {
         // init viewPager
         viewPager.adapter = viewModel.pagerAdapter
         viewPager.isUserInputEnabled = false
+        viewPager.offscreenPageLimit = 1
         viewPager.registerOnPageChangeCallback(
             object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {

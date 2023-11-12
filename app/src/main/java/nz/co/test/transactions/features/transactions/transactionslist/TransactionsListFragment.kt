@@ -1,31 +1,107 @@
 package nz.co.test.transactions.features.transactions.transactionslist
 
-import androidx.fragment.app.viewModels
+//import androidx.lifecycle.repeatOnLifecycle
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import nz.co.test.transactions.R
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.launch
+import nz.co.test.transactions.TransactionDto
+import nz.co.test.transactions.databinding.FragmentTransactionsListBinding
+import nz.co.test.transactions.error.ErrorType
+
 
 class TransactionsListFragment : Fragment() {
 
     companion object {
         fun newInstance() = TransactionsListFragment()
     }
+//    @Inject
+//    lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private val viewModel: TransactionsListViewModel by viewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        // TODO: Use the ViewModel
+    private val viewModel: TransactionsListViewModel by lazy {
+        ViewModelProvider(this)[TransactionsListViewModel::class.java]
     }
+    private lateinit var binding: FragmentTransactionsListBinding
+    private val transactionsList: RecyclerView by lazy { binding.transactionsList }
+    private val progressBar: View by lazy { binding.progressBar }
+
+
+//    private val viewModel2: TransactionsListViewModel by lazy {
+////        ViewModelProvider(this)[TransactionsListViewModel::class.java]
+//        ViewModelProvider(
+//            this,
+//            viewModelFactory,
+////            ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
+//        )[TransactionsListViewModel::class.java]
+//    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_transactions_list, container, false)
+        binding = FragmentTransactionsListBinding.inflate(inflater)
+        return binding.root
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+//        val viewModel =  ViewModelProvider(this, viewModelFactory)
+//            .get(TransactionsListViewModel::class.java)
+//
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.showTransactionsList.collect {
+                it?.let {
+                    val sortedList = it.sortedByDescending { dto -> dto.transactionDate }
+                    println("sortedList: $sortedList")
+                    showTransactionsList(sortedList)
+                }
+            }
+//            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+//                launch {
+//                    viewModel.showProfile.collect {
+//                        it?.let {
+//                            showUserProfile(it)
+//                        }
+//                    }
+//                }
+//                launch {
+//                    viewModel.showLoading.collect(::showLoading)
+//                }
+//
+//                launch {
+//                    viewModel.showError.collect {
+//                        it?.let {
+//                            showError(it)
+//                        }
+//                    }
+//                }
+//            }
+        }
+
+        viewModel.fetchTransactions()
+    }
+
+    private fun showTransactionsList(transactionDtos: List<TransactionDto>) {
+        transactionsList.layoutManager = LinearLayoutManager(context)
+        transactionsList.adapter = TransactionsListAdapter(transactionDtos)
+    }
+
+
+    fun onRetryClicked() {
+    }
+
+    fun showError(error: ErrorType?) {
+
+    }
+
+    fun showLoading(loading: Boolean) {
+        progressBar.visibility = if (loading) View.VISIBLE else View.GONE
+    }
+
 }
